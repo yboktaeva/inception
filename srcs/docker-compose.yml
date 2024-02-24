@@ -1,0 +1,24 @@
+
+version: '3.5'
+
+docker-network:
+
+services:
+  #Nginx Service
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx/.
+    depends_on:
+    ports: 
+      - "4443:443" #changer pour 443 en VM
+    restart: always
+  #MysqlDB Service
+  db:
+    container_name: mariadb
+    build: ./requirements/mariadb/.
+    depends_on:
+    restart: always
+    volumes:
+    ports:
+      - "3306:3306"
+  #Wordpress Service
