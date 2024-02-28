@@ -1,9 +1,13 @@
 
 FROM debian:buster
 
-RUN apt update && apt upgrade --yes && apt install sudo locales --yes
-RUN sudo apt update
-RUN sudo apt install nginx -y
+RUN apt update -y && apt upgrade -y && apt install sudo locales -y
+RUN apt update -y
+RUN apt install nginx -y
+RUN apt install vim -y
+RUN apt intsall curl -y
+RUN mkdir -p /etc/nginx/ssl
+RUN apt install openssl -y
 
 # COPY
 
