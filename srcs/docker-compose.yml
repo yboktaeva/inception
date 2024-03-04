@@ -1,9 +1,9 @@
 
 version: '3.9'
 
-# networks:
-#   docker-network:
-#     name: inception
+networks:
+  docker-network:
+    name: inception
 
 services:
   # Web Server
@@ -16,8 +16,8 @@ services:
     #   - wordpress
     # volumes:
     #   - wordpress:/var/www/html
-    # networks:
-    #   - inception
+    networks:
+      - docker-network
     restart: always
   # Wordpress service
 #   wordpress:
@@ -32,30 +32,31 @@ services:
 #     networks:
 #       - inception
 #     restart: always
-#   # Database
-#   mariadb:
-#     container_name: mariadb
-#     build: ./requirements/mariadb/.
-#     volumes:
-#       - mariadb:/var/lib/mysql
-#     env_file:
-#       - .env
-#     networks:
-#        - inception
-#     ports:
-#       - "3306:3306"
-#     restart: always
+  # Database
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/.
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+       - docker-network
+    ports:
+      - "3306:3306"
+    restart: always
 
-# volumes:
 #   wordpress:
 #     driver: local
 #     name: wordpress
 #     device: /home/yuboktae/data/wordpress
 #     o: bind
 #     type: none
-#   mariadb:
-#     driver: local
-#     name: mariadb
-#     device: /home/yuboktae/data/mariadb
-#     o: bind
-#     type: none
+volumes:
+  mariadb:
+    driver: local
+    name: mariadb
+    driver_opts:
+      device: /home/yuboktae/data/mariadb
+      o: bind
+      type: none
