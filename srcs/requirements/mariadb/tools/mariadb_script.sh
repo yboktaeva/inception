@@ -1,11 +1,11 @@
 #!/bin/sh
 
-# service mysql start
-mysqld_safe &
+service mariadb start
+# mysqld_safe &
 
-sleep 10
+# sleep 10
 
-if [ -d "/var/lib/mysql/" ] && [ -d "/var/lib/mysql/${MYSQL_DATABASE}" ]; then
+if [ -d "/var/lib/mysql/" ] && [ -d "/var/lib/mysql/mysql" ]; then
     echo "MariaDB is already installed"
 else
     mkdir -p /run/mysqld /var/lib/mysql
