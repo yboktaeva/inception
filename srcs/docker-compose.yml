@@ -13,26 +13,26 @@ services:
     build: ./requirements/nginx/.
     ports: 
       - "443:443"
-    # depends_on: 
-    #   - wordpress
-    # volumes:
-    #   - wp:/var/www/wordpress
+    depends_on: 
+      - wordpress
+    volumes:
+      - wp:/var/www/wordpress
     networks:
       - docker-network
     restart: on-failure
-  # Wordpress service
-#   wordpress:
-#     container_name: wordpress
-#     build: ./requirements/wordpress/.
-#     depends_on: 
-#       - mariadb
-#     volumes:
-#       - wp:/var/www/wordpress
-#     env_file:
-#       - .env
-#     networks:
-#       - inception
-#     restart: on-failure
+  Wordpress service
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/.
+    depends_on: 
+      - mariadb
+    volumes:
+      - wp:/var/www/wordpress
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: on-failure
   # Database
   mariadb:
     container_name: mariadb
@@ -48,13 +48,13 @@ services:
     restart: unless-stopped
 
 volumes:
-  # wordpress:
-  #   driver: local
-  #   name: wp
-  #   driver_opts:
-  #     device: "/home/yuboktae/data/wp"
-  #     o: "bind"
-  #     type: "none"
+  wordpress:
+    driver: local
+    name: wp
+    driver_opts:
+      device: "/home/yuboktae/data/wp"
+      o: "bind"
+      type: "none"
   mariadb:
     driver: local
     name: db

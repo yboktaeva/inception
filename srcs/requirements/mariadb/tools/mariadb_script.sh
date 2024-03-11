@@ -1,26 +1,24 @@
 #!/bin/sh
 
-if [ ! -d "/var/lib/mysql/wordpress" ]; then
+if [ ! -d "/var/lib/mysql/wp_db" ]; then
     service mysql start
     mkdir -p /run/mysqld /var/lib/mysql
     chown -R mysql:mysql /var/lib/mysql /run/mysqld
     chmod 777 /var/run/mysqld
-    # mariadb-install-db --user=mysql --datadir=/var/lib/mysql --skip-test-db
 
-    mysql -e "CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;"
+    mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
 
-    mysql -e "CREATE USER IF NOT EXISTS \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+    mysql -e "CREATE USER IF NOT EXISTS \`${DB_USER}\`@'%' IDENTIFIED BY '${DB_PASSWORD}';"
 
-    mysql -e "GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO \`${MYSQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+    mysql -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${DB_USER}\`@'%' IDENTIFIED BY '${DB_PASSWORD}';"
 
     # mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
 
     mysql -e "FLUSH PRIVILEGES;"
 
-    mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
+    mysqladmin -u root password $DB_ROOT_PASSWORD
 
     service mysql stop
-
 fi
 
-/usr/bin/mysqld_safe
+exec /usr/bin/mysqld_safe
