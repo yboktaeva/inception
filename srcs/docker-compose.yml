@@ -20,7 +20,7 @@ services:
     networks:
       - docker-network
     restart: on-failure
-  Wordpress service
+  # Wordpress service
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/.
