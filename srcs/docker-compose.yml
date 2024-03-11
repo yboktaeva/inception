@@ -31,7 +31,7 @@ services:
     env_file:
       - .env
     networks:
-      - inception
+      - docker-network
     restart: on-failure
   # Database
   mariadb:
