@@ -16,7 +16,7 @@ services:
     depends_on: 
       - wordpress
     volumes:
-      - wp:/var/www/wordpress
+      - wordpress:/var/www/wordpress
     networks:
       - docker-network
     restart: on-failure
@@ -27,7 +27,7 @@ services:
     depends_on: 
       - mariadb
     volumes:
-      - wp:/var/www/wordpress
+      - wordpress:/var/www/wordpress
     env_file:
       - .env
     networks:
@@ -38,7 +38,7 @@ services:
     container_name: mariadb
     build: ./requirements/mariadb/.
     volumes:
-      - db:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     env_file:
       - .env
     networks:
