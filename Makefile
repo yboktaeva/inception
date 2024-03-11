@@ -6,12 +6,12 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 13:05:01 by yuboktae          #+#    #+#              #
-#    Updated: 2024/03/11 17:20:43 by yuboktae         ###   ########.fr        #
+#    Updated: 2024/03/11 17:49:12 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-COMPOSE_FILE := ./srcs/docker-compose.yml
-DC := docker compose
+COMPOSE_FILE = ./srcs/docker-compose.yml
+DC = docker compose
 
 create_vol:
 	mkdir -p $(HOME)/data/db
