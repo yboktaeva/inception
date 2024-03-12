@@ -1,11 +1,14 @@
 #!/bin/sh
 
 if [ ! -f ./wp-config.php ]; then
-	wget http://wordpress.org/latest.tar.gz
-	tar xfz latest.tar.gz
-	mv wordpress/* .
-	rm -rf latest.tar.gz
-	rm -rf wordpress
+    wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
+    cd /var/www
+    tar -xzf wordpress-6.0-fr_FR.tar.gz
+    rm wordpress-6.0-fr_FR.tar.gz
+    chown -R root:root /var/www/wordpress
+	# mv wordpress/* .
+	# rm -rf latest.tar.gz
+	# rm -rf wordpress
 
 	sed -i "s/username_here/$DB_USER/g" wp-config-sample.php
 	sed -i "s/password_here/$DB_PASSWORD/g" wp-config-sample.php

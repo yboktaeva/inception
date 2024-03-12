@@ -18,7 +18,7 @@ if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
 
     mysqladmin -u root password $DB_ROOT_PASSWORD
 
-    service mysql stop
+    service mariadb stop
 fi
 
 exec /usr/bin/mysqld_safe
