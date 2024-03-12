@@ -5,16 +5,13 @@ RUN apt-get update -y && apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /run/php/ /var/www/
 
-
-# RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && \
-#     cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz && \
-#     chown -R root:root /var/www/wordpress
-
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp
 
-# RUN rm -rf /var/www/wordpress/wp-config-sample.php
+# RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && \
+#     cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz && \
+#     chown -R root:root /var/www/wordpress
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
 COPY ./tools/start_wordpress.sh /tmp/
@@ -24,5 +21,6 @@ RUN chmod +x /tmp/start_wordpress.sh
 EXPOSE 9000
 
 ENTRYPOINT ["/tmp/start_wordpress.sh"]
+# CMD ["usr/sbin/php-fpm7.4", "-F"]
 
 

@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 13:05:01 by yuboktae          #+#    #+#              #
-#    Updated: 2024/03/11 19:26:08 by yuboktae         ###   ########.fr        #
+#    Updated: 2024/03/12 11:02:36 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ create_vol:
 	mkdir -p $(HOME)/data/db
 	mkdir -p $(HOME)/data/wp
 	sudo chown -R $(USER) $(HOME)/data
-	sudo chmod -R 777 $(HOME)/data
+	sudo chmod -R 755 $(HOME)/data
 	
 all:
 	$(DC) -f $(COMPOSE_FILE) up -d --build
@@ -30,10 +30,10 @@ down:
 	$(DC) -f $(COMPOSE_FILE) down
 
 logs:
-	$(DC) -f logs -f $(COMPOSE_FILE)
+	$(DC) $(COMPOSE_FILE) logs -f 
 	
 ps:
-	$(DC) -f ps $(COMPOSE_FILE)
+	$(DC) -f $(COMPOSE_FILE) ps
 
 shell-ng:
 	$(DC) -f $(COMPOSE_FILE) exec nginx sh

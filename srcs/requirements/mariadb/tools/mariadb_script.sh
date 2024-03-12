@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ ! -d "/var/lib/mysql/wp_db" ]; then
-    service mysql start
+if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
+    service mariadb start
     mkdir -p /run/mysqld /var/lib/mysql
     chown -R mysql:mysql /var/lib/mysql /run/mysqld
     chmod 777 /var/run/mysqld
