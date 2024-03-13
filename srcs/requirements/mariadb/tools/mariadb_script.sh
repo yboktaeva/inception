@@ -3,7 +3,7 @@
 if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
     service mariadb start
     mkdir -p /run/mysqld /var/lib/mysql
-    chown -R mysql:mysql /var/lib/mysql /run/mysqld
+    chown -R user_db:user_db /var/lib/mysql /run/mysqld
     chmod 777 /var/run/mysqld
 
     mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"

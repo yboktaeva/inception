@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 13:05:01 by yuboktae          #+#    #+#              #
-#    Updated: 2024/03/12 11:02:36 by yuboktae         ###   ########.fr        #
+#    Updated: 2024/03/13 10:58:44 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,19 +31,16 @@ down:
 
 logs:
 	$(DC) $(COMPOSE_FILE) logs -f 
-	
-ps:
-	$(DC) -f $(COMPOSE_FILE) ps
 
 shell-ng:
-	$(DC) -f $(COMPOSE_FILE) exec nginx sh
+	$(DC) -f exec nginx sh
 shell-db:
-	$(DC) -f $(COMPOSE_FILE) exec mariadb sh
+	$(DC) -f exec mariadb sh
 shell-php:
-	$(DC) -f $(COMPOSE_FILE) exec  wordpress sh
+	$(DC) -f exec  wordpress sh
 
 clean:
-	docker stop $(DOCKER_PS_QA); \
+	@docker stop $(DOCKER_PS_QA); \
 	docker rm $(DOCKER_PS_QA); \
 	docker rmi -f $(DOCKER_IMAGES_QA); \
 	docker volume rm $(DOCKER_VOLUMES_QA); \

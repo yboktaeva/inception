@@ -21,6 +21,7 @@ RUN chmod +x /tmp/start_wordpress.sh
 EXPOSE 9000
 
 ENTRYPOINT ["/tmp/start_wordpress.sh"]
-# CMD ["usr/sbin/php-fpm7.4", "-F"]
+
+CMD ["usr/sbin/php-fpm7.4", "-F"]
 
 
