@@ -1,24 +1,27 @@
 #!/bin/sh
 
-if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
-    service mariadb start
-    mkdir -p /run/mysqld /var/lib/mysql
-    chown -R user_db:user_db /var/lib/mysql /run/mysqld
-    chmod 777 /var/run/mysqld
+mkdir -p var/run/mysqld /var/lib/mysql /var/log/mysql /error/log/mysql
+chown -R mysql:mysql /var/lib/mysql
+chown -R mysql:mysql var/run/mysqld
+chown -R mysql:mysql /var/log/mysql
+chown -R mysql:mysql /error/log/mysql
+chmod 755 /var/run/mysqld
+chmod 755 /var/lib/mysql
+touch /error/log/mysql/error.log
 
-    mysql -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
+mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql --rpm > /dev/null
+mysqld --user=mysql --bootstrap << _EOF_
 
-    mysql -e "CREATE USER IF NOT EXISTS \`${DB_USER}\`@'%' IDENTIFIED BY '${DB_PASSWORD}';"
+USE mysql ;
+FLUSH PRIVILEGES ;
 
-    mysql -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${DB_USER}\`@'%' IDENTIFIED BY '${DB_PASSWORD}';"
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}' ;
+CREATE DATABASE IF NOT EXISTS $DB_NAME;
+CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}' ;
+GRANT ALL PRIVILEGES ON $DB_NAME.* TO '${DB_USER}'@'%' ;
+GRANT ALL PRIVILEGES ON *.* TO '${DB_USER}'@'%' ;
 
-    # mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+FLUSH PRIVILEGES ; 
+_EOF_
 
-    mysql -e "FLUSH PRIVILEGES;"
-
-    mysqladmin -u root password $DB_ROOT_PASSWORD
-
-    service mariadb stop
-fi
-
-exec /usr/bin/mysqld_safe
+exec mysqld_safe "--defaults-file=/etc/my.cnf.d/my.cnf"

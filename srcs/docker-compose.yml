@@ -19,7 +19,18 @@ services:
       - wordpress:/var/www/wordpress
     networks:
       - docker-network
-    restart: on-failure
+    restart: always
+  # Database
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/.
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+       - docker-network
+    restart: always
   # Wordpress service
   wordpress:
     container_name: wordpress
@@ -32,20 +43,7 @@ services:
       - .env
     networks:
       - docker-network
-    restart: on-failure
-  # Database
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb/.
-    volumes:
-      - mariadb:/var/lib/mysql
-    env_file:
-      - .env
-    networks:
-       - docker-network
-    ports:
-      - "3306:3306"
-    restart: unless-stopped
+    restart: always
 
 volumes:
   wordpress:
