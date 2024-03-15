@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 13:05:01 by yuboktae          #+#    #+#              #
-#    Updated: 2024/03/15 16:01:16 by yuboktae         ###   ########.fr        #
+#    Updated: 2024/03/15 19:56:31 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@ up: create-vol
 create-vol:
 	@mkdir -p /home/$(USER)/data/db
 	@mkdir -p /home/$(USER)/data/wp
-	@sudo chmod -R 755 /home/$(USER)/data/
 clean-vol:
-	@sudo rm -rf /home/$(USER)/data
+	@sudo chown -R $(USER):$(USER) /home/$(USER)/data
+	@rm -rf /home/$(USER)/data
 down:
 	$(DC) -f $(COMPOSE_FILE) down
 
@@ -34,4 +34,4 @@ clean:
 prune:
 	@docker system prune --all --force --volumes
 
-.PHONY: all build down clean
+.PHONY: all build down clean create-vol clean-vol
