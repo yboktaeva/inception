@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 13:05:01 by yuboktae          #+#    #+#              #
-#    Updated: 2024/03/18 15:21:14 by yuboktae         ###   ########.fr        #
+#    Updated: 2024/03/18 16:42:55 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ up: create-vol
 create-vol:
 	mkdir -p /home/$(USER)/data/db
 	mkdir -p /home/$(USER)/data/wp
-	@chown -R $(USER) $(HOME)/data
+	@sudo chown -R $(USER) $(HOME)/data
 	@chmod -R +x $(HOME)/data/
 clean-vol:
-	@chown -R $(USER) $(HOME)/data
+	@sudo chown -R $(USER) $(HOME)/data
 	@chmod -R +x $(HOME)/data/
 	@rm -rf /home/$(USER)/data
 down:

@@ -1,15 +1,7 @@
 #!/bin/sh
 
-# Stop running containers
-docker stop $(docker ps -qa)
-
-# Remove stopped containers
-docker rm -f $(docker ps -qa)
-
-# Force remove images
-docker rmi -f $(docker images -qa)
-
-# Remove volumes
-docker volume rm $(docker volume ls -q)
-
-docker network rm $(docker network ls -q) 2>/dev/null
+docker ps -qa | xargs -r docker stop
+docker ps -qa | xargs -r docker rm
+docker images -qa | xargs -r docker rmi -f
+docker volume ls -q | xargs -r docker volume rm
+docker network ls -q --filter type=custom | xargs -r docker network rm
